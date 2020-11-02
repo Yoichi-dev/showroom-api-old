@@ -43,7 +43,12 @@ router.get('/onlive', (req, res, next) => {
     json: true
   }
   request(options, (error, response, body) => {
-    res.send(body.onlives[0].lives[0]);
+    let count = 0
+    // テストで英語出てきたら鬱陶しいから除外
+    while (body.onlives[count].lives[count].main_name.includes('JKT48')) {
+      count++
+    }
+    res.send(body.onlives[count].lives[count]);
   })
 });
 
