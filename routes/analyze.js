@@ -288,6 +288,19 @@ router.get('/eventdata/:id', (req, res, next) => {
 // 削除機能
 router.get('/delete/:id', (req, res, next) => {
 
+    try {
+        let readText = fs.readFileSync("./event.json", 'utf-8')
+        readJson = JSON.parse(readText)
+    } catch (error) {
+        res.send({ "Error": 600 })
+        return
+    }
+    console.log(readJson)
+    let newArray = readJson.filter(n => n != req.params.id)
+    console.log(newArray)
+
+    fs.writeFileSync(`./event.json`, JSON.stringify(newArray))
+
     // イベント管理ファイルがあるか
     try {
         fs.unlinkSync(`./event/${req.params.id}.json`);
