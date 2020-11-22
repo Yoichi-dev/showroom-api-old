@@ -285,4 +285,18 @@ router.get('/eventdata/:id', (req, res, next) => {
     res.json(readJson);
 })
 
+// 削除機能
+router.get('/delete/:id', (req, res, next) => {
+
+    // イベント管理ファイルがあるか
+    try {
+        fs.unlinkSync(`./event/${req.params.id}.json`);
+    } catch (error) {
+        res.send({ "Error": 500 })
+        return
+    }
+
+    res.send('delete OK')
+})
+
 module.exports = router
