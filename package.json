@@ -10,12 +10,10 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
-    "helmet": "^4.1.1",
+    "helmet": "^4.2.0",
     "http-errors": "~1.6.3",
     "jsdom": "^16.4.0",
     "morgan": "~1.9.1",
-    "request": "^2.88.2",
-    "sync-request": "^6.1.0",
     "then-request": "^6.0.2"
   }
 }
