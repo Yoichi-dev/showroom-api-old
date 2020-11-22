@@ -32,7 +32,7 @@ router.get('/event/:url', (req, res, next) => {
     let writeJson = {}
     writeJson.data = []
 
-    const ANALYZE_TIME = (Math.floor(new Date().getTime() / 1000)) + 32400
+    const ANALYZE_TIME = Math.floor(new Date().getTime() / 1000)
 
     if (req.params.url === '' || req.params.url.length < 2) {
         res.send({ "Error": 404 })
@@ -118,7 +118,7 @@ router.get('/event/:url', (req, res, next) => {
 
 // イベント一括アップデート
 router.get('/update', (req, res, next) => {
-    const ANALYZE_TIME = (Math.floor(new Date().getTime() / 1000)) + 32400
+    const ANALYZE_TIME = Math.floor(new Date().getTime() / 1000)
     let readJson = null
 
     // イベント管理ファイルがあるか
