@@ -225,6 +225,8 @@ function getData(baseUrl, parameter) {
     )
 }
 
+
+
 // JSON取得
 router.get('/eventlist', (req, res, next) => {
     let readJson = null
@@ -296,7 +298,8 @@ router.get('/delete/:id', (req, res, next) => {
         return
     }
     console.log(readJson)
-    let newArray = readJson.filter(n => n != req.params.id)
+    let newArray = {}
+    newArray.event = readJson.event.filter(n => n != req.params.id)
     console.log(newArray)
 
     fs.writeFileSync(`./event.json`, JSON.stringify(newArray))
@@ -310,6 +313,20 @@ router.get('/delete/:id', (req, res, next) => {
     }
 
     res.send('delete OK')
+})
+
+// 登録イベント確認
+router.get('/eventmanagement', (req, res, next) => {
+
+    try {
+        let readText = fs.readFileSync("./event.json", 'utf-8')
+        readJson = JSON.parse(readText)
+    } catch (error) {
+        res.send({ "Error": 600 })
+        return
+    }
+
+    res.json(readJson)
 })
 
 module.exports = router
