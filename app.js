@@ -14,17 +14,20 @@ let app = express();
 app.use(helmet())
 
 // CORSを許可する
-app.use(function (req, res, next) {
-  var allowedOrigins = ['https://niconico-showroom.yoichi.dev', 'https://showroom-event-analyzer.yoichi.dev'];
-  var Origin = req.headers.Origin;
-  if (allowedOrigins.indexOf(Origin) > -1) {
-    res.setHeader('Access-Control-Allow-Origin', Origin);
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", ".yoichi.dev");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
+let allowCrossDomain = function (req, res, next) {
+  if (req.headers.origin.endsWith('.yoichi.dev')) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   }
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  return next();
-});
+  next();
+}
+app.use(allowCrossDomain);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
