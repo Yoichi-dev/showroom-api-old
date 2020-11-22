@@ -15,8 +15,8 @@ app.use(helmet())
 
 // CORSを許可する
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://niconico-showroom.yoichi.dev/");
-  res.header("Access-Control-Allow-Origin", "https://showroom-event-analyzer.yoichi.dev/");
+  res.header("Access-Control-Allow-Origin", "https://niconico-showroom.yoichi.dev");
+  res.header("Access-Control-Allow-Origin", "https://showroom-event-analyzer.yoichi.dev");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
