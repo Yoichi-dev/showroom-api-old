@@ -15,10 +15,15 @@ app.use(helmet())
 
 // CORSを許可する
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://niconico-showroom.yoichi.dev");
-  res.header("Access-Control-Allow-Origin", "https://showroom-event-analyzer.yoichi.dev");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+  var allowedOrigins = ['https://niconico-showroom.yoichi.dev', 'https://showroom-event-analyzer.yoichi.dev'];
+  var Origin = req.headers.Origin;
+  if (allowedOrigins.indexOf(Origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', Origin);
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
 });
 
 // view engine setup
