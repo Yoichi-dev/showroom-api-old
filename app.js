@@ -7,17 +7,17 @@ let logger = require('morgan')
 let helmet = require('helmet')
 
 let indexRouter = require('./routes/index')
-let analyzerRouter = require('./routes/analyzer')
+let analyzerJsonRouter = require('./routes/analyzer-json')
 
 let app = express()
 
 app.use(helmet())
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://showroom-event-analyzer.yoichi.dev");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -30,7 +30,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/analyzer', analyzerRouter)
+app.use('/analyzer-json', analyzerJsonRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
