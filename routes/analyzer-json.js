@@ -31,7 +31,7 @@ router.get('/event-url/:url', (req, res, next) => {
 
   // イベント管理ファイルがあるか
   try {
-    eventList = JSON.parse(fs.readFileSync("./json/event.json", 'utf-8'))
+    eventList = JSON.parse(fs.readFileSync("/home/ec2-user/showroom-api/json/event.json", 'utf-8'))
   } catch (error) {
     throw new Error('Not Event File')
   }
@@ -116,10 +116,10 @@ router.get('/event-url/:url', (req, res, next) => {
 
   }
 
-  fs.writeFileSync(`./json/${eventFileName}.json`, JSON.stringify(writeJson))
+  fs.writeFileSync(`/home/ec2-user/showroom-api/json/${eventFileName}.json`, JSON.stringify(writeJson))
 
   eventList.event.push(eventFileName)
-  fs.writeFileSync("./json/event.json", JSON.stringify(eventList))
+  fs.writeFileSync("/home/ec2-user/showroom-api/json/event.json", JSON.stringify(eventList))
 
   res.json({ "add": 200 })
   return
@@ -135,7 +135,7 @@ router.get('/event-list', (req, res, next) => {
 
   // イベント管理ファイルがあるか
   try {
-    eventList = JSON.parse(fs.readFileSync("./json/event.json", 'utf-8'))
+    eventList = JSON.parse(fs.readFileSync("/home/ec2-user/showroom-api/json/event.json", 'utf-8'))
   } catch (error) {
     throw new Error('Not Event File')
   }
@@ -144,7 +144,7 @@ router.get('/event-list', (req, res, next) => {
   eventList.event.forEach((val) => {
     let baseJson = null
     try {
-      baseJson = JSON.parse(fs.readFileSync(`./json/${val}.json`, 'utf-8'))
+      baseJson = JSON.parse(fs.readFileSync(`/home/ec2-user/showroom-api/json/${val}.json`, 'utf-8'))
     } catch (error) {
       console.log('イベントファイル無し' + val)
       return
@@ -168,7 +168,7 @@ router.get('/event-data/:id', (req, res, next) => {
   let readJson = null
 
   try {
-    readJson = JSON.parse(fs.readFileSync(`./json/${req.params.id}.json`, 'utf-8'))
+    readJson = JSON.parse(fs.readFileSync(`/home/ec2-user/showroom-api/json/${req.params.id}.json`, 'utf-8'))
   } catch (error) {
     throw new Error('No Add Event')
   }
@@ -189,7 +189,7 @@ router.get('/event-delete/:id', (req, res, next) => {
 
   // イベント管理ファイルがあるか
   try {
-    eventList = JSON.parse(fs.readFileSync("./json/event.json", 'utf-8'))
+    eventList = JSON.parse(fs.readFileSync("/home/ec2-user/showroom-api/json/event.json", 'utf-8'))
   } catch (error) {
     throw new Error('Not Event File')
   }
@@ -200,11 +200,11 @@ router.get('/event-delete/:id', (req, res, next) => {
 
   let newArray = {}
   newArray.event = eventList.event.filter(n => n != req.params.id)
-  fs.writeFileSync(`./json/event.json`, JSON.stringify(newArray))
+  fs.writeFileSync(`/home/ec2-user/showroom-api/json/event.json`, JSON.stringify(newArray))
 
   // // イベント管理ファイルがあるか
   try {
-    fs.rename(`./json/${req.params.id}.json`, `./json/${req.params.id}_${DELETE_TIME}.json`, (err) => {
+    fs.rename(`/home/ec2-user/showroom-api/json/${req.params.id}.json`, `/home/ec2-user/showroom-api/json/${req.params.id}_${DELETE_TIME}.json`, (err) => {
       if (err) throw err;
       console.log('ファイルを削除しました')
     })
@@ -221,7 +221,7 @@ router.get('/event-json', (req, res, next) => {
 
   // イベント管理ファイルがあるか
   try {
-    eventList = JSON.parse(fs.readFileSync("./json/event.json", 'utf-8'))
+    eventList = JSON.parse(fs.readFileSync("/home/ec2-user/showroom-api/json/event.json", 'utf-8'))
   } catch (error) {
     throw new Error('Not Event File')
   }
@@ -236,7 +236,7 @@ function update() {
 
   // イベント管理ファイルがあるか
   try {
-    eventList = JSON.parse(fs.readFileSync("./json/event.json", 'utf-8'))
+    eventList = JSON.parse(fs.readFileSync("/home/ec2-user/showroom-api/json/event.json", 'utf-8'))
   } catch (error) {
     throw new Error('Not Event File')
   }
@@ -246,7 +246,7 @@ function update() {
 
     let baseJson = null
     try {
-      baseJson = JSON.parse(fs.readFileSync(`./json/${updateEventId}.json`, 'utf-8'))
+      baseJson = JSON.parse(fs.readFileSync(`/home/ec2-user/showroom-api/json/${updateEventId}.json`, 'utf-8'))
     } catch (error) {
       return
     }
@@ -330,7 +330,7 @@ function update() {
         baseJson.data.push(subJson)
       }
     }
-    fs.writeFileSync(`./json/${updateEventId}.json`, JSON.stringify(baseJson))
+    fs.writeFileSync(`/home/ec2-user/showroom-api/json/${updateEventId}.json`, JSON.stringify(baseJson))
   })
 }
 
