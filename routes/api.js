@@ -10,6 +10,11 @@ router.get('/', (req, res, next) => {
   res.send('parameter: room_id');
 });
 
+// 疎通確認
+router.get('/alive', (req, res, next) => {
+  res.json({ 'alive': true });
+});
+
 // ルームIDから配信IDを取得
 router.get('/live_info/:id', (req, res, next) => {
 
