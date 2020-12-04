@@ -11,7 +11,11 @@ router.get('/', (req, res, next) => {
 });
 
 // 疎通確認
-router.get('/alive', (req, res, next) => {
+router.get('/alive/:room', (req, res, next) => {
+  console.log('==========')
+  console.log(req.ip)
+  console.log(req.params.room)
+  console.log('==========')
   res.json({ 'alive': true });
 });
 
