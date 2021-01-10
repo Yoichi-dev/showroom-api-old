@@ -42,6 +42,26 @@ router.get('/live_info/:id', (req, res, next) => {
 
 });
 
+// ルームIDからルーム情報を取得
+router.get('/profile/:id', (req, res, next) => {
+
+  if (req.params.id === '' || req.params.id.length < 5) {
+    res.send('Error');
+    return
+  }
+
+  let options = {
+    url: apiBaseURL + "room/profile?room_id=" + req.params.id,
+    method: 'GET',
+    json: true
+  }
+
+  request(options, (error, response, body) => {
+    res.send(body);
+  })
+
+});
+
 // テスト用（オンライブ1位のルームIDを取得）
 router.get('/onlive', (req, res, next) => {
   console.log('テスト実行')
