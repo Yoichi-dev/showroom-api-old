@@ -1,5 +1,7 @@
 let express = require('express');
 let request = require("request");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 let router = express.Router();
 
@@ -58,6 +60,54 @@ router.get('/profile/:id', (req, res, next) => {
 
   request(options, (error, response, body) => {
     res.send(body);
+  })
+
+});
+
+// ルームIDからイベント詳細情報を取得
+router.get('/contribution/:event/:user', (req, res, next) => {
+
+  if (req.params.event === '' || req.params.event.length < 3) {
+    res.send('Error');
+    return
+  }
+  if (req.params.user === '' || req.params.user.length < 5) {
+    res.send('Error');
+    return
+  }
+  let options = {
+    url: `https://www.showroom-live.com/event/contribution/${req.params.event}?room_id=${req.params.user}`,
+    method: 'GET',
+    json: true
+  }
+
+  request(options, (error, response, body) => {
+    const DOM = new JSDOM(body)
+    let table = DOM.window.document.getElementsByTagName('table')[1]
+    let json = []
+    try {
+      for (let i = 1; i < table.rows.length; i++) {
+        json.push({
+          rank: table.rows[i].cells[0].textContent,
+          user: table.rows[i].cells[1].textContent,
+          point: table.rows[i].cells[2].textContent
+        })
+      }
+    } catch (e) {
+      let table2 = DOM.window.document.getElementsByTagName('table')[0]
+      try {
+        for (let i = 1; i < table2.rows.length; i++) {
+          json.push({
+            rank: table2.rows[i].cells[0].textContent,
+            user: table2.rows[i].cells[1].textContent,
+            point: table2.rows[i].cells[2].textContent
+          })
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    res.json(json);
   })
 
 });
