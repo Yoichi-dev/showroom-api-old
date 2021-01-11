@@ -87,21 +87,33 @@ router.get('/contribution/:event/:user', (req, res, next) => {
     let json = []
     try {
       for (let i = 1; i < table.rows.length; i++) {
-        json.push({
-          rank: table.rows[i].cells[0].textContent,
-          user: table.rows[i].cells[1].textContent,
-          point: table.rows[i].cells[2].textContent
-        })
+        if (table.rows[i].cells[1].textContent == '0') {
+          console.log('配信無し1')
+          json.push({})
+          break;
+        } else {
+          json.push({
+            rank: table.rows[i].cells[0].textContent,
+            user: table.rows[i].cells[1].textContent,
+            point: table.rows[i].cells[2].textContent
+          })
+        }
       }
     } catch (e) {
       let table2 = DOM.window.document.getElementsByTagName('table')[0]
       try {
         for (let i = 1; i < table2.rows.length; i++) {
-          json.push({
-            rank: table2.rows[i].cells[0].textContent,
-            user: table2.rows[i].cells[1].textContent,
-            point: table2.rows[i].cells[2].textContent
-          })
+          if (table2.rows[i].cells[1].textContent == '0') {
+            console.log('配信無し2')
+            json.push({})
+            break;
+          } else {
+            json.push({
+              rank: table2.rows[i].cells[0].textContent,
+              user: table2.rows[i].cells[1].textContent,
+              point: table2.rows[i].cells[2].textContent
+            })
+          }
         }
       } catch (error) {
         console.log(error)
