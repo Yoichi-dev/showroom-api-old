@@ -7,10 +7,10 @@
 [Home Page](https://niconico-showroom-api.herokuapp.com/)
 
 配信情報取得  
-https://niconico-showroom-api.herokuapp.com/alive/:room_id
+https://niconico-showroom-api.herokuapp.com/apis/live_info/317313
 
 ONLIVE1位の配信情報取得（テスト用）  
-https://niconico-showroom-api.herokuapp.com/onlive
+https://niconico-showroom-api.herokuapp.com/apis/onlive
 
 # Installation
 
