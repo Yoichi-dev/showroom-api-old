@@ -32,7 +32,7 @@ $ npm start
 
 # Author
 
-* よーいちろー [@PianoPc](https://twitter.com/PianoPc)
+* よーいちろー [@TYoichiro](https://twitter.com/TYoichiro)
 
 # License
 
