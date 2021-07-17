@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index');
+let express = require('express');
+let router = express.Router();
+
+router.get('/', (req, res, next) => {
+  res.json({ title: 'Point History APIs' });
 });
 
 module.exports = router;

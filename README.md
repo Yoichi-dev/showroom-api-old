@@ -1,6 +1,6 @@
 # Showroom API 個人使用用
 
-[SHOWROOM](https://www.showroom-live.com/)の（非）公式APIはCORSがあるため個人アプリで使用するとき面倒なので使いやすくしたもの
+[SHOWROOM](https://www.showroom-live.com/)の（非?）公式APIはCORSがあるため個人アプリで使用するとき面倒なので使いやすくしたもの
 
 # DEMO
 
@@ -27,13 +27,10 @@ $ npm start
 ```bash
 $ git clone https://github.com/Yoichi-dev/showroom-api.git
 $ cd showroom-api
+$ npm i
 $ npm start
 ```
 
 # Author
 
 * よーいちろー [@TYoichiro](https://twitter.com/TYoichiro)
-
-# License
-
-[MIT license](https://en.wikipedia.org/wiki/MIT_License).
