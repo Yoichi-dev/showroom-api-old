@@ -52,7 +52,7 @@ router.get('/onlive/:room_id', common.asyncWrapper(async (req, res, next) => {
 // ユーザ情報
 router.get('/:room_id', common.asyncWrapper(async (req, res, next) => {
 
-  if (req.params.room_id == null || req.params.room_id == "") {
+  if (req.params.room_id == null || req.params.room_id == "" || req.params.room_id == "live") {
     res.json({});
   } else {
     let roomData = await getApi(`${BASE_URL}/room/profile?room_id=${req.params.room_id}`);
@@ -63,6 +63,8 @@ router.get('/:room_id', common.asyncWrapper(async (req, res, next) => {
 
 // ユーザの配信情報
 router.get('/live/:room_id', common.asyncWrapper(async (req, res, next) => {
+
+  console.log("これ：" + req.params.room_id);
 
   if (req.params.room_id == null || req.params.room_id == "") {
     res.json({});
