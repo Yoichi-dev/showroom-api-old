@@ -8,6 +8,7 @@ let helmet = require('helmet');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
+let liveRouter = require('./routes/live');
 let eventsRouter = require('./routes/events');
 let historiesRouter = require('./routes/histories');
 let avatarsRouter = require('./routes/avatars');
@@ -36,5 +37,6 @@ app.use('/api/events', eventsRouter);
 app.use('/api/histories', historiesRouter);
 app.use('/api/avatars', avatarsRouter);
 app.use('/api/minecraft', minecraftRouter);
+app.use('/api/live', liveRouter);
 
 module.exports = app;

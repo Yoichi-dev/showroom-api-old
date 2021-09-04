@@ -64,8 +64,6 @@ router.get('/:room_id', common.asyncWrapper(async (req, res, next) => {
 // ユーザの配信情報
 router.get('/live/:room_id', common.asyncWrapper(async (req, res, next) => {
 
-  console.log("これ：" + req.params.room_id);
-
   if (req.params.room_id == null || req.params.room_id == "") {
     res.json({});
   } else {
