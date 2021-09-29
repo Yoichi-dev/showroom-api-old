@@ -8,6 +8,24 @@ exports.getEvents = connection => {
     });
 }
 
+exports.getHoldEvents = (connection, time) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * from events where started_at < ? AND ended_at > ? ORDER BY started_at DESC', [time, time], (err, rows, fields) => {
+            if (err) reject();
+            resolve(rows);
+        });
+    });
+}
+
+exports.getEndEvents = (connection, time) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * from events where ended_at <= ? ORDER BY started_at DESC', time, (err, rows, fields) => {
+            if (err) reject();
+            resolve(rows);
+        });
+    });
+}
+
 exports.getEventData = (connection, id) => {
     return new Promise((resolve, reject) => {
         connection.query('SELECT * from events where event_id = ?', id, (err, rows, fields) => {

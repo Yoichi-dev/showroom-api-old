@@ -20,6 +20,32 @@ router.get('/', common.asyncWrapper(async (req, res, next) => {
   res.json(db_events);
 }));
 
+// 開催中イベント一覧
+router.get('/hold', common.asyncWrapper(async (req, res, next) => {
+  let connection = MY_SQL.createConnection(mysql_setting);
+  await common.dbConnect(connection);
+
+  let time = Math.round(new Date().getTime() / 1000);
+
+  let db_events = await sql_event.getHoldEvents(connection, time);
+
+  connection.end();
+  res.json(db_events);
+}));
+
+// 終了済イベント一覧
+router.get('/end', common.asyncWrapper(async (req, res, next) => {
+  let connection = MY_SQL.createConnection(mysql_setting);
+  await common.dbConnect(connection);
+
+  let time = Math.round(new Date().getTime() / 1000);
+
+  let db_events = await sql_event.getEndEvents(connection, time);
+
+  connection.end();
+  res.json(db_events);
+}));
+
 // イベント情報
 router.get('/:event_id', common.asyncWrapper(async (req, res, next) => {
   let connection = MY_SQL.createConnection(mysql_setting);
