@@ -37,26 +37,8 @@ exports.getEventData = (connection, id) => {
 
 exports.getEventUsers = (connection, id) => {
     return new Promise((resolve, reject) => {
-        connection.query(
-            `select
-                events.event_id
-                ,users.room_id
-                ,users.room_name
-                ,users.room_url_key
-            from
-                event_history
-            left join
-                events
-            on
-                event_history.event_id = events.event_id
-            left join
-                users
-            on
-                event_history.room_id = users.room_id
-            where
-                event_history.event_id = ?
-            GROUP by users.room_id`,
-            id,
+        connection.query('select a.event_id, a.room_id, a.get_at, a.follower_num, a.gap, a.next_rank, a.point, a.`rank` from (select event_id, room_id, get_at, follower_num, gap, next_rank, point, `rank` from event_history where event_id = ? and get_at = (select max(get_at) from event_history where event_id = ?)) a left join users b on a.room_id = b.room_id order by a.`rank`;',
+            [id, id],
             (err, rows, fields) => {
                 if (err) reject();
                 resolve(rows);
