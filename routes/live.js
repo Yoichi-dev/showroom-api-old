@@ -8,7 +8,6 @@ const { JSDOM } = require("jsdom");
 const FETCH = require('node-fetch');
 
 let common = require('../common');
-const e = require('express');
 // let sql_user = require('../sql/user');
 
 // let mysql_setting = common.mysqlSetting();
