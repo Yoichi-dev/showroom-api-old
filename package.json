@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.22.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
@@ -16,6 +17,7 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
+    "query-string": "^7.0.1",
     "then-request": "^6.0.2"
   }
 }
