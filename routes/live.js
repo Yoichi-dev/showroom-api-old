@@ -5,6 +5,7 @@ let router = express.Router();
 let MY_SQL = require('mysql');
 let request = require('then-request');
 const { JSDOM } = require("jsdom");
+const jQuery = require("jquery");
 const FETCH = require('node-fetch');
 
 let common = require('../common');
@@ -57,6 +58,29 @@ router.get('/ranking/:room_id', common.asyncWrapper(async (req, res, next) => {
   } else {
     let rankingData = await getApi(`${BASE_URL}/live/stage_user_list?room_id=${req.params.room_id}`);
     res.json(rankingData);
+  };
+
+}));
+
+// ライブランキングポイントあり
+router.get('/ranking-point/:room_url_key', common.asyncWrapper(async (req, res, next) => {
+
+  if (req.params.room_url_key == null || req.params.room_url_key == "" || req.params.room_url_key == "live") {
+    res.json({});
+  } else {
+    console.log(`${BASE_SEARCH_URL}/${req.params.room_url_key}`)
+    try {
+      const event_res = await FETCH(`${BASE_SEARCH_URL}/${req.params.room_url_key}`);
+      checkStatus(event_res.status);
+      const event_html = await event_res.text();
+      const dom = new JSDOM(event_html);
+      const $ = jQuery(dom.window);
+      const $doc = $(dom.window.document);
+      res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).ranking.live_ranking);
+    } catch (error) {
+      console.log(error);
+      res.json({});
+    }
   };
 
 }));
