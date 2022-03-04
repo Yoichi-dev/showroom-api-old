@@ -73,6 +73,18 @@ router.get('/live/:room_id', common.asyncWrapper(async (req, res, next) => {
 
 }));
 
+// ユーザの参加イベント情報
+router.get('/event/:room_id', common.asyncWrapper(async (req, res, next) => {
+
+  if (req.params.room_id == null || req.params.room_id == "") {
+    res.json({});
+  } else {
+    let liveData = await getApi(`${BASE_URL}/room/event_and_support?room_id=${req.params.room_id}`);
+    res.json(liveData);
+  }
+
+}));
+
 function getApi(url) {
   return new Promise((resolve, reject) => {
     request('GET', url).done((res) => {

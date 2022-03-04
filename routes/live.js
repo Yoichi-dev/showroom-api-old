@@ -68,7 +68,6 @@ router.get('/ranking-point/:room_url_key', common.asyncWrapper(async (req, res, 
   if (req.params.room_url_key == null || req.params.room_url_key == "" || req.params.room_url_key == "live") {
     res.json({});
   } else {
-    console.log(`${BASE_SEARCH_URL}/${req.params.room_url_key}`)
     try {
       const event_res = await FETCH(`${BASE_SEARCH_URL}/${req.params.room_url_key}`);
       checkStatus(event_res.status);
@@ -77,6 +76,29 @@ router.get('/ranking-point/:room_url_key', common.asyncWrapper(async (req, res, 
       const $ = jQuery(dom.window);
       const $doc = $(dom.window.document);
       res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).ranking.live_ranking);
+      // res.json(dom)
+    } catch (error) {
+      console.log(error);
+      res.json({});
+    }
+  };
+
+}));
+
+// ブロードキャストキー取得
+router.get('/broadcast/:room_url_key', common.asyncWrapper(async (req, res, next) => {
+
+  if (req.params.room_url_key == null || req.params.room_url_key == "" || req.params.room_url_key == "live") {
+    res.json({});
+  } else {
+    try {
+      const event_res = await FETCH(`${BASE_SEARCH_URL}/${req.params.room_url_key}`);
+      checkStatus(event_res.status);
+      const event_html = await event_res.text();
+      const dom = new JSDOM(event_html);
+      const $ = jQuery(dom.window);
+      const $doc = $(dom.window.document);
+      res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).broadcast_key)
     } catch (error) {
       console.log(error);
       res.json({});
@@ -145,6 +167,7 @@ router.get('/search', common.asyncWrapper(async (req, res, next) => {
             {
               img: roomData.image,
               id: event_nodes[i].getElementsByClassName('listcardinfo-image')[0].getElementsByClassName('room-url')[0].dataset.roomId,
+              url: event_nodes[i].getElementsByClassName('listcardinfo-image')[0].getElementsByClassName('room-url')[0].href,
               title: event_nodes[i].getElementsByClassName('listcardinfo-main-text')[0].textContent
             }
           )
