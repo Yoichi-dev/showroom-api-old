@@ -69,7 +69,7 @@ router.get('/ranking-point/:room_url_key', common.asyncWrapper(async (req, res, 
     res.json({});
   } else {
     try {
-      const event_res = await FETCH(`${BASE_SEARCH_URL}/${req.params.room_url_key}`);
+      const event_res = await FETCH(`${BASE_SEARCH_URL}/r/${req.params.room_url_key}`);
       checkStatus(event_res.status);
       const event_html = await event_res.text();
       const dom = new JSDOM(event_html);
@@ -92,7 +92,7 @@ router.get('/broadcast/:room_url_key', common.asyncWrapper(async (req, res, next
     res.json({});
   } else {
     try {
-      const event_res = await FETCH(`${BASE_SEARCH_URL}/${req.params.room_url_key}`);
+      const event_res = await FETCH(`${BASE_SEARCH_URL}/r/${req.params.room_url_key}`);
       checkStatus(event_res.status);
       const event_html = await event_res.text();
       const dom = new JSDOM(event_html);
