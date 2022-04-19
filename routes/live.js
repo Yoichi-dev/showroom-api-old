@@ -69,14 +69,15 @@ router.get('/ranking-point/:room_url_key', common.asyncWrapper(async (req, res, 
     res.json({});
   } else {
     try {
-      const event_res = await FETCH(`${BASE_SEARCH_URL}/r/${req.params.room_url_key}`);
-      checkStatus(event_res.status);
-      const event_html = await event_res.text();
-      const dom = new JSDOM(event_html);
-      const $ = jQuery(dom.window);
-      const $doc = $(dom.window.document);
-      res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).ranking.live_ranking);
-      // res.json(dom)
+      // const event_res = await FETCH(`${BASE_SEARCH_URL}/r/${req.params.room_url_key}`);
+      // checkStatus(event_res.status);
+      // const event_html = await event_res.text();
+      // const dom = new JSDOM(event_html);
+      // const $ = jQuery(dom.window);
+      // const $doc = $(dom.window.document);
+      // console.log(event_html);
+      // res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).ranking.live_ranking);
+      res.json({});
     } catch (error) {
       console.log(error);
       res.json({});
@@ -92,13 +93,10 @@ router.get('/broadcast/:room_url_key', common.asyncWrapper(async (req, res, next
     res.json({});
   } else {
     try {
-      const event_res = await FETCH(`${BASE_SEARCH_URL}/r/${req.params.room_url_key}`);
+      const event_res = await FETCH(`https://www.showroom-live.com/api/room/status?room_url_key=${req.params.room_url_key}`);
       checkStatus(event_res.status);
-      const event_html = await event_res.text();
-      const dom = new JSDOM(event_html);
-      const $ = jQuery(dom.window);
-      const $doc = $(dom.window.document);
-      res.json(JSON.parse($doc.find("#js-live-data").attr("data-json")).broadcast_key)
+      const event_json = await event_res.json();
+      res.json(event_json.broadcast_key)
     } catch (error) {
       console.log(error);
       res.json({});
